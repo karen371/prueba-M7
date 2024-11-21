@@ -1,10 +1,16 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import ContadorView from '../views/ContadorView.vue'
+import HomeView from '@/views/HomeView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
+    component: HomeView
+  },
+  {
+    path: '/contador',
+    name: 'contador',
     component: ContadorView
   },
   {
