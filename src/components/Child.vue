@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Componente hijo</h1>
-    <input v-model="text" placeholder="Escribe algo" />
+    <input v-model="text" placeholder="Escribe algo" id="input" />
     <button @click="sendText" id="enviar">Enviar</button>
   </div>
 </template>

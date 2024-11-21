@@ -1,25 +1,26 @@
 module.exports = {
-  'Test de comunicación entre Parent y Child': function (browser) {
-    browser
-      .url('http://localhost:8082')
-      .waitForElementVisible('body', 1000)
-      .waitForElementVisible('p', 5000) // Espera que el elemento <p> sea visible
-
-      // Verifica que el texto recibido en Parent esté vacío al inicio
-      .assert.containsText('#recivido', 'Texto recibido del hijo: ')
-
-      // Ingresa texto en el input del Child
-      .setValue('input', 'Hola desde Child')
-
-      // Da clic en el botón de Child para enviar el texto al Parent
-      .click('#enviar')
-
-      // Pausa por un momento para asegurar que Vue renderice el cambio
-      .pause(1000)  // Pausa de 1 segundo
-
-      // Verifica que el Parent haya recibido el texto y lo muestre en el <p>
-      .assert.containsText('#recivido', 'Texto recibido del hijo: Hola desde Child')
-
-      .end();
-  }
+  "Pruebas del Componente Hijo y Padre": {
+    "Debe emitir el evento 'send-text' con el texto ingresado": (browser) => {
+      browser
+        .url("http://localhost:8082") // Cambia esta URL si es necesario
+        .waitForElementVisible("body")
+        .assert.visible("h1") // Verifica que la página cargó
+        .assert.containsText("h1", "Componente hijo") // Verifica el encabezado del hijo
+        .setValue("#input", "Texto desde el hijo") // Ingresa texto en el input
+        .click("#enviar") // Haz clic en el botón enviar
+        .assert.value("#input", "") // Verifica que el input se vació
+        .end(); // Finaliza la sesión del navegador aquí si no deseas continuar en la misma.
+    },
+    "Debe manejar el evento 'send-text' y actualizar el texto recibido": (browser) => {
+      browser
+        .url("http://localhost:8082") // Cambia esta URL si es necesario
+        .waitForElementVisible("body")
+        .assert.visible("h1") // Verifica que la página cargó
+        .assert.containsText("h1", "Componente Padre") // Verifica el encabezado del padre
+        .setValue("#input", "Texto desde el hijo") // Ingresa texto en el input del hijo
+        .click("#enviar") // Haz clic en el botón enviar
+        .assert.containsText("#recivido", "Texto desde el hijo") // Verifica que el texto fue actualizado en el padre
+        .end(); // Finaliza la sesión aquí
+    },
+  },
 };
